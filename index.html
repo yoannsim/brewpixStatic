@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="yoann simonet">
+    <meta name="generator" content="Hugo 0.84.0">
+    <title>brewPix</title>
+
+
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+
+    @supports(padding:max(0px)) {
+      body, header, footer {
+          padding-left: min(0vmin, env(safe-area-inset-left));
+          padding-right: min(0vmin, env(safe-area-inset-right));
+          margin: 0; 
+          height: 100%; 
+      }
+    }
+
+
+
+	  .bg-image {
+		  background: url('landscape.jpg')center top fixed; 
+		  background-size: auto;
+		}
+	  
+	  @media (min-width: 1025px) {
+      .bg-image {
+        background: url('landscape.jpg')center top ; 
+        background-size: cover;
+      }
+    }
+
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .bg-primary {
+        background: rgb(169,155,232);
+        background: linear-gradient(313deg, rgba(169,155,232,1) 0%, rgba(222,161,228,1) 47%, rgba(169,155,232,1) 100%); 
+    }
+
+	  
+    </style>
+	
+	<script src="jquery-3.6.0.min.js"></script>
+
+    <script>
+	  
+	  /*if (location.protocol !== 'https:') {
+		location.replace(`https:${location.href.substring(location.protocol.length)}`)};*/
+
+      jQuery.getJSON('https://brewpix-api-a2i35.ondigitalocean.app/stock', function (csvdata) {
+        document.getElementById("BLANCHE").innerHTML = csvdata.BLANCHE;
+        document.getElementById("BLONDE").innerHTML =  csvdata.BLONDE;
+        document.getElementById("IPA").innerHTML =  csvdata.IPA;
+        document.getElementById("RED_ALE").innerHTML =  csvdata.RED_ALE;
+        document.getElementById("WIPA").innerHTML =  csvdata.WIPA;
+      });
+
+      jQuery.getJSON('https://brewpix-api-a2i35.ondigitalocean.app/visitor', function (visitor){
+        document.getElementById("VISITOR").innerHTML = visitor;
+      });
+
+      function  submitform(){
+
+        var cmd = { mail : "error", txt : "error"};
+
+        cmd.mail = document.getElementById('exampleFormControlInput1').value;
+        cmd.txt  =  document.getElementById('exampleFormControlTextarea1').value;
+
+        jQuery.post('https://brewpix-api-a2i35.ondigitalocean.app/cmd',JSON.stringify(cmd),resp => { 
+          console.log(resp);
+          document.getElementById('exampleFormControlInput1').value = '';
+          document.getElementById('exampleFormControlTextarea1').value = '';
+          $('#myModal').modal('toggle');
+        });
+
+      }
+
+      function closeModal(){
+        $('#myModal').modal('toggle');
+        console.log("close my modal");
+      }
+
+    </script>
+    
+  </head>
+<body>
+    
+<header>
+  <div class="collapse bg-dark" id="navbarHeader">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 col-md-7 py-4">
+          <h4 class="text-white">Commande</h4>
+          <p class="text-muted">Les commandes peuvent être effectuées par mail ou via le fomulaire</p>
+          <form id="myForm">
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">email</label>
+              <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="mon@email.com">
+            </div>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">txt</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="Description de la commande" rows="3"></textarea>
+            </div>
+          </form>
+          <button class="btn btn-primary" onclick="submitform()">Envoyer</button>
+        </div>
+        <div class="col-sm-4 offset-md-1 py-4">
+          <h4 class="text-white">Contact</h4>
+          <ul class="list-unstyled">
+            <li><a href="mailto:info@brewpix.ch" class="text-white">Email: info@brewpix.ch</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container">
+      <a href="#" class="navbar-brand d-flex align-items-center">
+        <img src="logo.jpg" alt="logo">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class=bg-image>
+	
+    <section class="py-5 text-center">
+      <div class="row py-lg-5">
+        <div class="col-lg-6 col-md-8 mx-auto">
+          <h1 class="fw-light">brewPix</h1>
+          <p class="lead text-white">Bière artisanale</p>
+          <p>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="album py-5">
+      <div class="container">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="BLONDE.png" class="card-img-top" alt="Italian Trulli">
+              <div class="card-body">
+                <h5 class="card-title">Blonde pale ale</h5>
+                <p>Prix: <span class="text-success">4fr</span></p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <a href="#">
+                    <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation" >commander</button>
+                  </a>
+                  </div>
+                  <small class="text-muted">reste <span id="BLONDE"></span> en stock</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="IPA.png" class="card-img-top" alt="Italian Trulli">
+              <div class="card-body">
+                <h5 class="card-title">IPA</h5>
+                <p>Prix: <span class="text-success">4fr</span></p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <a href="#">
+                      <button type="button" class="btn btn-sm btn-dark" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="true" aria-label="Toggle navigation" >commander</button>
+                    </a>
+                  </div>
+                  <div class="btn-group">
+                  </div>
+                  <small class="text-muted">reste <span id="IPA"></span> en stock</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="WHITE_IPA.png" class="card-img-top" alt="Italian Trulli">
+              <div class="card-body">
+                <h5 class="card-title">White IPA</h5>
+                <p>Prix: <span class="text-success">4fr</span></p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <a href="#">
+                      <button type="button" class="btn btn-sm btn-info" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation" >commander</button>
+                    </a>
+                  </div>
+                  <small class="text-muted">reste <span id="WIPA"></span> en stock</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="AMBREE.png" class="card-img-top" alt="Italian Trulli">
+              <div class="card-body">
+                <h5 class="card-title">Ambrée rouge</h5>
+                <p>Prix: <span class="text-success">4fr</span></p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <a href="#">
+                      <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation" >commander</button>
+                    </a>
+                  </div>
+                  <small class="text-muted">reste <span id="RED_ALE"></span> en stock</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card shadow-sm">
+              <img src="BLANCHE.png" class="card-img-top" alt="Italian Trulli">
+              <div class="card-body">
+                <h5 class="card-title">Blanche</h5>
+                <p>Prix: <span class="text-success">4fr</span></p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <a href="#">
+                      <button type="button" class="btn btn-sm btn-outline-dark" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation" >commander</button>
+                    </a>
+                  </div>
+                  <small class="text-muted">reste <span id="BLANCHE"></span> en stock</small>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card bg-light shadow-sm">
+              <img src="NEIPA.png" class="card-img-top" alt="Italian Trulli">
+              <div class="card-body">
+                <h5 class="card-text">NEIPA</h5>
+                <p>Prix: <span class="text-success">6fr</span></p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <a href="#">
+                      <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="collapse" data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation" >commander</button>
+                    </a>
+                  </div>
+                  <small class="text-muted">Uniquement sur commande</small>
+                </div>
+              </div>
+            </div>
+          </div>     
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</main>
+
+<footer class="text-muted py-5 bg-dark">
+  <div class="container">
+	<small class="text-muted"><span id="VISITOR"></span> visiteurs</small>
+    <p class="float-end mb-1">
+      <a href="#">Back to top</a>
+    </p>
+  </div>
+</footer>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">La demande a bien été reçue</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="assets/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+  
+ 
+</html>
