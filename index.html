@@ -16,29 +16,27 @@
 <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
-
-    @supports(padding:max(0px)) {
-      body, header, footer {
-          padding-left: min(0vmin, env(safe-area-inset-left));
-          padding-right: min(0vmin, env(safe-area-inset-right));
-          margin: 0; 
-          height: 100%; 
+    @supports (-webkit-touch-callout: none) {
+      /* CSS specific to iOS devices */
+      .bg-image {
+        background: url('landscape.jpg')center top; 
+        background-size: auto;
       }
+      
     }
 
-
-
-	  .bg-image {
-		  background: url('landscape.jpg')center top fixed; 
-		  background-size: auto;
-		}
-	  
-	  @media (min-width: 1025px) {
+    @supports not (-webkit-touch-callout: none) {
+      /* CSS for other than iOS devices */
       .bg-image {
-        background: url('landscape.jpg')center top ; 
+        background: url('landscape.jpg')center top fixed; 
         background-size: cover;
       }
     }
+   
+
+	  
+
+  
 
       .bd-placeholder-img {
         font-size: 1.125rem;
